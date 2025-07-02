@@ -29,20 +29,15 @@ This repository contains a distributed map-reduce solution for the word count pr
 | Message | Field | Type | Description |
 | ------------- | ------------- | ------------- | ------------- |
 | Ping | ping | int | Random number |
-|
 | Pong | pong | int | Received number incremented by 1 |
-|
 | TaskRequest | request | int | Irrelevant field |
-|
 | TaskAssignment | assignmentStatus | int | Status of the task assignment |
 | TaskAssignment | taskId | int | Task ID |
 | TaskAssignment | taskType | int | Task type |
 | TaskAssignment | input_files | List[str] | Target files for the task |
 | TaskAssignment | M | int | Number of reduce tasks configured by the user |
-|
 | TaskCompletion | taskId | int | Task ID |
 | TaskCompletion | taskType | int | Task type |
-|
 | TaskCompletionACK | taskId | int | Task ID |
 | TaskCompletionACK | taskType | int | Task type |
 
