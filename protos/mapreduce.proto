@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+// File: mapreduce.proto
+// Description: This file defines a simple message format to solve the word count
+// problem with map-reduce.
+
+service Driver {
+  // Pings the Driver just to know if its reachable.
+  // Input: Ping (random number)
+  // Output: Pong (received number incremented and echoed back)
+  rpc PingPong (Ping) returns (Pong) {
+    // Example usage: request = { ping: 1 } => response = { pong: 2 }
+  }
+
+  // Requests the Driver a new task.
+  // Input: TaskRequest (does not contain relevant information in this implementation
+  // but could potentially include information about the client like number of cores
+  // or current load so the Driver assigns the most suitable task)
+  // Output: TaskAssignment (the task assignment)
+  rpc AssignTask (TaskRequest) returns (TaskAssignment) {}
+
+  // Notifies the completion of a task so the Driver can mark it as complete.
+  // Input: TaskCompletion (task completion notification from a worker)
+  // Output: TaskCompletionACK (acknowledgement of task completion notification)
+  rpc AcknowledgeTaskCompletion (TaskCompletion) returns (TaskCompletionACK) {}
+}
+
+// Ping message
+message Ping {
+  // Random number
+  // Example usage: ping = 100
+  int32 ping = 1;
+}
+
+// Pong message
+message Pong {
+  // Received number incremented by 1
+  // Example usage: pong = 101
+  int32 pong = 1;
+}
+
+// Message to request a new task assignment
+message TaskRequest {
+  // The information of this field is not relevant
+  // Example usage: request = 1
+  int32 request = 1;
+}
+
+// Message that provides a new task assignment 
+message TaskAssignment {
+  // Field that indicates whether the assignment was successful or not
+  // Example usage 1: assignmentStatus = 0  // OK
+  // Example usage 2: assignmentStatus = 1  // KO
+  int32 assignmentStatus = 1;
+
+  // Field that indicates the task ID
+  // Example usage: taskId = 1
+  int32 taskId = 2;
+
+  // Field that indicates the task type
+  // Example usage 1: taskType = 0  // map
+  // Example usage 2: taskType = 1  // reduce
+  int32 taskType = 3;
+
+  // Field that indicates the target files for the task
+  // Example usage: input_files = ["file1.txt", "file2.txt"]
+  repeated string input_files = 4;
+
+  // Field that provides the M value configured by the user so as to
+  // obtain the destination bucket a word goes to in map tasks
+  // Example usage: M = 6
+  int32 M = 5;
+}
+
+// Message for the worker to notify the driver that a
+// task assignment has been completed
+message TaskCompletion {
+  // Field that indicates the task ID
+  // Example usage: taskId = 1
+  int32 taskId = 1;
+
+  // Field that indicates the task type
+  // Example usage 1: taskType = 0  // map
+  // Example usage 2: taskType = 1  // reduce
+  int32 taskType = 2;
+}
+
+// Message that acknowledges receipt of the notification
+message TaskCompletionACK {
+  // Field that indicates the task ID
+  // Example usage: taskId = 1
+  int32 taskId = 1;
+
+  // Field that indicates the task type
+  // Example usage 1: taskType = 0  // map
+  // Example usage 2: taskType = 1  // reduce
+  int32 taskType = 2;
+}

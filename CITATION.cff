@@ -1,0 +1,7 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Castro Gomez
+    given-names: Beltran
+title: "Word Count implementation using MapReduce, gRPC and Python"
+date-released: 2025-07-02
